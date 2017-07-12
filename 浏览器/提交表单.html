@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <form  method="get" id="login-form" onsubmit="return checkForm()" accept-charset="utf-8">
+            <input type="text" id="username" name = "username">
+            <input type="password" id="password">
+            <input type="hidden" id="pwd" name="password">
+            <button type="submit">submit</button>
+        </form>
+    </body>
+    <script type="text/javascript">
+    //<input>没有name属性。没有name属性的<input>的数据不会被提交。
+    function checkForm(){
+        var pwd = document.getElementById('password');
+        var hidePwd = document.getElementById('pwd');
+        hidePwd.value = pwd.value;
+        return true;
+    }
+    </script>
+</html>

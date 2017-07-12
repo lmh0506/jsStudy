@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+	<html>
+	<head>
+		<title></title>
+		<meta charset = 'utf-8'>
+	</head>
+	<body>
+	
+	</body>
+	<script type="text/javascript">
+		'use strict'
+		//filter也是一个常用的操作 它用于把Array的某些元素过滤掉 然后返回剩下的元素
+		//和map()类似 Array的filter也接受一个函数 和map()不同的是 filter() 把传入的函数依次作用于每个元素 然后根据返回值是true还是false决定保留还是丢弃该元素
+
+		//例如删除偶数保留奇数
+		var arr = [1,2,3,4,5,6,7,8];
+		var r = arr.filter(function (x) {
+			return x % 2 !== 0;
+		});
+		console.log(r);//[1, 3, 5, 7]
+
+		//把一个Array中 的空字符串删除 
+		arr = ['A','','B',null,undefined,'c','   '];
+		r = arr.filter(function(s){
+			return s && s.trim();//ie9以下没有trim()方法
+		});
+		console.log(r);//["A", "B", "c"]
+		//可见用于filter()这个高阶函数  关键在于正确实现一个筛选函数
+		//filter()接受的回调函数 其实可以有多个参数 通常我们仅适用第一个参数 表示Array某个元素 回调函数还可以接受另外两个参数 表示元素的位置和数组本身
+		arr = r;
+		r = arr.filter(function(element,index,self){
+			console.log(element);//依次打印"A", "B", "c"
+			console.log(index);//依次打印0,1,2
+			console.log(self);//self 就是变量arr
+			return true;
+		});
+
+		//去除重复元素
+		arr = ['apple', 'strawberry', 'banana', 'pear', 'apple', 'orange', 'orange', 'strawberry'];;
+		r = arr.filter(function(element,index,self){
+			return self.indexOf(element) === index;
+		});
+		console.log(r);
+		//去除重复依靠的是indexOf总是返回第一个元素的位置 后续的重复元素位置与indexOf返回的位置不相等 因此被filter滤掉了
+
+		//筛选素数
+		function get_primes(arr) {
+			return arr.filter(function(x){
+				if(x < 2)
+					return false;
+				for(let i = 2;i<=Math.sqrt(x);i++)
+				{
+					if(x % i == 0)
+						return false;
+				}
+				return true;
+			})
+		}
+		// 测试:
+		var
+		    x,
+		    r,
+		    arr = [];
+		for (x = 1; x < 100; x++) {
+		    arr.push(x);
+		}
+		r = get_primes(arr);
+		if (r.toString() === [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97].toString()) {
+		    alert('测试通过!');
+		} else {
+		    alert('测试失败: ' + r.toString());
+		}
+	</script>
+	</html>
+</html>

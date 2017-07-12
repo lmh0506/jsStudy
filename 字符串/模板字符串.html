@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body>
+    </body>
+    <script type="text/javascript">
+        'use strict';
+        var name = '小明';
+        var age = 20;
+        var message = '你好，' + name + ',你今年' + age + '岁了';//用+号拼接多个字符串
+        alert(message);
+        var messageES6 = `你好，${name},你今年${age}岁了!`;//如果有很多变量需要连接，用+号就比较麻烦。ES6新增了一种模板字符串，表示方法和多行字符串一样，但是他会自动替换字符串中的变量
+        alert(messageES6);
+    </script>
+</html>

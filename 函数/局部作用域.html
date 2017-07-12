@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body>
+    </body>
+    <script type="text/javascript">
+        'use strict'
+        //由于javascrip的变量作用域实际上是函数内部 我们在for循环等语句块中是无法定义具有局部作用域的变量的
+        function foo(){
+            for(var i = 0; i<100; i++ ){
+                //
+            }
+            i += 100;//任然可以引用变量
+        }
+
+        //为了解决块级作用域 es6引入了新的关键字let 用let替代var可以申明一个块级作用域的变量
+        function bar(){
+            var sum = 0;
+            for(let i = 0; i<100; i++ ){
+                sum += i;
+            }
+           // i += 1;// ReferenceError: i is not defined
+        }
+        foo();
+        bar();
+
+        //由于var 和 let申明的是变量 如果要申明一个常量 在es6之前是不行的  我们通常用全部大写的变量来表示这是一个常量 不要修改他的值
+        
+        //es6标准引入了新的关键字const 来定义变量 const和let都具有块级作用域
+        var PI = 3.14;
+        const pi = 3.14;
+        pi = 3;//Assignment to constant variable.  常量不能被修改
+        console.log(pi);//3.14;
+    </script>
+</html>

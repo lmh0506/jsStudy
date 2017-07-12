@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <script type="text/javascript">
+            var robot = {
+                name:'Robot',
+                height:1.6,
+                run:function(){
+                    console.log(this.name+'is running...');
+                }
+            };
+
+            var Student = {
+                name:'Robot',
+                height:1.2,
+                run:function(){
+                    console.log(this.name+'is running..');
+                }
+            };
+            var xiaoming = {
+                name:'小明'
+            }
+            xiaoming.__proto__  = Student;//xiaoming的原型指向了对象Student 看上去xiaoming仿佛从Student继承下来
+            console.log(xiaoming.name);
+            xiaoming.run();
+
+            //javascrip的原型链和java的class的区别就在 它没有class的概念 所有对象都是实例 所谓继承关系不过是把一个对象的原型指向另一个对象而已
+            var Bird = {
+                fly:function(){
+                    console.log(this.name+'is flying...');
+                }
+            };
+            xiaoming.__proto__ = Bird;
+            //xiaoming.run(); 报错xiaoming.run is not a function
+            xiaoming.fly();
+
+            //Object.create()方法可以传入一个原型对象 并创建一个基于该原型对象的新对象 但是新对象什么属性都没有 因此 我们可以编写一个函数来创建xiaoming
+            //原型对象   Student
+            function createStudent(name){
+                //基于student原型创建一个新形象
+                var s = Object.create(Student);
+                //初始化新对象
+                s.name = name;
+                return s;
+            }
+
+            xiaoming = createStudent('小明');
+            xiaoming.run();
+            console.log(xiaoming.__proto__ === Student);
+            
+        </script>
+    </body>
+</html>

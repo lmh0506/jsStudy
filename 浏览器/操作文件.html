@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body>
+    <div id="image" style="width:100px;height:100px;"></div>
+        <input type="file" id="file"><span id="info"></span>
+        <p><span>文件：</span><span id="fileName"></span></p>
+        <p><span>大小:</span><span id="fileSize"></span></p>
+        <p><span>修改:</span><span id="fileTime"></span></p>
+    </body>
+    <script type="text/javascript">
+        var info = document.getElementById('info');
+        var file = document.getElementById('file');
+        var image = document.getElementById('image');
+        var fileName = document.getElementById('fileName');
+        var fileSize = document.getElementById('fileSize');
+        var fileTime = document.getElementById('fileTime');
+
+        //监听change事件
+        file.addEventListener('change', function(){
+            //清除背景
+            image.style.backgroundImage = '';
+            //检查文件是否选择
+            if(!file.value){
+                info.innerHTML = '没有选择文件';
+                return;
+            }
+            //获取file引用
+            var fileInfo = file.files[0];
+            //获取File信息
+            fileName.innerHTML = fileInfo.name;
+            fileSize.innerHTML = fileInfo.size;
+            fileTime.innerHTML = fileInfo.lastModdfiedDate;
+            if(fileInfo.type !== 'image/jpeg' && fileInfo.type !== 'image/png' && fileInfo.type !== 'image/gif'){
+                alert('不是有效的图片文件');
+                return;
+            }
+            //读取文件
+            var reader = new FileReader();
+            reader.onload = function(e){
+                var data = e.target.result;
+                console.log(data);
+                image.style.backgroundImage = 'url('+data+')';
+            }
+            //以dataURL形式读取文件
+            reader.readAsDataURL(fileInfo);
+        })
+    </script>
+</html>

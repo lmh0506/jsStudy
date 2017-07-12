@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body>
+    </body>
+    <script type="text/javascript">
+        'use strict'
+        var xiaoming = {
+            name:'小明',
+            birth:'1990',
+            age:function(){
+                var y = new Date().getFullYear();
+                return y - this.birth;
+            }
+        }
+        console.log(xiaoming.age);//function(){...}
+        console.log(xiaoming.age());//27
+
+        //绑定到对象上的函数称为方法 和普通函数也没啥区别 但是他在内部使用了this关键字
+        //在一个方法内部  this是一个特殊变量 他始终指向当前对象  也就是xiaoming这个变量 所以this.birth 可以拿到xiaoming的属性birth
+        
+        function getAge(){
+            var y = new Date().getFullYear();
+            return y - this.birth;
+        }
+        var xiaohong = {
+            name:'小红',
+            birth:1990,
+            age:getAge
+        };
+        console.log(xiaohong.age());//27
+        //console.log(getAge());//TypeError: Cannot read property 'birth' of undefined
+
+        var fn = xiaohong.age;
+        //console.log(fn());//TypeError: Cannot read property 'birth' of undefined
+        //因此要保证this指向正确 必须用obj.xxx()形式调用
+        
+        var xm = {
+            name:'小明',
+            birth:1990,
+            age:function(){
+                var that = this;//在方法内部一开始就捕获this
+                function getAgeFromBirth(){
+                    var y = new Date().getFullYear();
+                    return y - that.birth;//用that而不是this
+                } 
+                return getAgeFromBirth();
+            }
+           
+        }
+        
+        console.log(xm.age());//27
+        //用var that = this;，你就可以放心地在方法内部定义其他函数，而不是把所有语句都堆到一个方法中。
+        
+        //虽然在一个独立的函数调用中，根据是否是strict模式  this指向undefined或window  不过我们还是可以控制this指向
+        //要指定函数的this指向哪个对象 可以用函数本身的apply方法 他接收两个参数 第一个参数就是需要绑定的this变量 第二个参数是Array 表示函数本身的参数
+        
+        console.log(xiaohong.age());//27
+        console.log(getAge.apply(xiaohong,[]));//27 this指向xiaohong  参数为空
+
+        //另一个与apply()类似的方法是call()  唯一的区别是
+        //apply()把参数打包成Array在传入
+        //call()把参数按顺序传入
+        console.log(Math.max.apply(null,[3,5,4]));//5
+        console.log(Math.max.call(null,3,5,4));//5  对普通函数的调用  我们通常把this绑定为null
+
+        //利用apply()  我们还可以动态的改变函数的行为
+        //javascrip的所有对象都是动态的  即使内置的函数 我们也可以重新指向新的函数
+        
+        var count = 0;
+        var oldParseInt = parseInt;//保存原函数
+
+        window.parseInt = function(){
+            count ++;
+            return oldParseInt.apply(null,arguments);//调用原函数
+        }
+        //测试
+        parseInt('10');
+        parseInt('20');
+        parseInt('30');
+        console.log(count);//3
+        
+    </script>
+</html>

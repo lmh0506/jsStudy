@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body>
+    </body>
+    <script type="text/javascript">
+        'usr strict'
+        class Student{
+            constructor(name){
+                this.name = name;
+            }
+
+            hello(){
+                alert('hello,'+this.name+'!');
+            }
+        }
+        //class的定义包含了构造函数constructor和定义在原型对象上的函数hello()(注意没有function关键字)这样就避免了Studen.prototype.hello = function(){...}这样分散的代码
+        var xiaoming = new Student('小明');
+        xiaoming.hello();
+        //用class定义对象的另一个好处是继承更方便了 可以直接用extends来实现
+        class PrimaryStudent extends Student {
+            constructor(name,grade){
+                super(name);//记得用super调用父类的构造方法
+                this.grade = grade;
+            }
+            myGrade(){
+                alert('I am at ' + this.grade);
+            }
+        }
+
+        //注意PrimaryStudent的定义也是class关键字实现的 而extends则表示原型链对象来自Student 子类的构造方法可能会与父类不太相同例如PrimaryStudent需要name和grade两个参数 并且需要通过super(name)来调用父类的构造函数否则父类的那么属性无法正常的初始化
+        
+        xiaoming = new PrimaryStudent('小明2',2);
+        xiaoming.hello();
+        xiaoming.myGrade();
+        
+    </script>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body>
+    </body>
+    <script type="text/javascript">
+        'use strict'
+
+        //不在任何函数内定义的变量就具有全局作用域 实际上 javascrip默认有一个全局对象window  全局作用域的变量实际上被绑定到window的一个属性
+        var course = 'learn javascript';
+        alert(course);//'learn javascript'
+        alert(window.course);//'learn javascript'
+        //因此直接访问全局变量course和访问window.course是完全一样的
+        
+        function foo(){
+            alert('foo');
+        }
+        window.foo();//通过window.foo()调用
+        foo();//直接调用foo()
+
+        //由于函数的定义有两种方式  以变量的方式var foo = function(){}定义的函数实际上也是一个全局变量 因此 顶层函数的定义也被视为一个全局变量 并绑定到window对象
+        
+        //javascript实际上就只有一个全局作用域 任何变量(函数也视为变量)  如果没有在当前函数作用域中找到 就会继续往上查找 最后如果在全局作用域中也没有找到 则报ReferenceError错误。
+
+    </script>
+</html>

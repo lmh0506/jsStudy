@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body>
+    </body>
+    <script type="text/javascript">
+        function foo(x){
+            console.log(x);
+            //arguments只在函数内部起作用  并且永远指向当前函数的调用者传入的所有参数  arguments类似于Array但他不是一个Array
+            for(var i = 0 ; i < arguments.length ; i++){
+                console.log(arguments[i]);//10,20,30
+            }
+        }
+        foo(10,20,30);
+
+        //利用arguments 你可以获得调用者传入的所有参数，也就是说即使函数不定义任何参数，还是可以拿到参数的值
+        function abs(){
+            if(arguments.length === 0){
+                return 0;
+            }
+            var x =arguments[0];
+            return x >= 0 ? x : -x;
+        }
+        console.log(abs());//0
+        console.log(abs(10));//10
+        console.log(abs(-9));//9
+
+
+        //实际上arguments最常用于判断传入参数的个数
+        function f(a,b,c){
+            if(arguments.length === 2){
+                //实际拿到的参数是a和b  c为undefined
+                c = b;//把b赋值给c
+                b = null;//把b变成默认值
+            }
+        }//要把中间的参数b 变为可选参数 就只能通过arguments判断 然后重新调整参数并赋值
+
+        function fo(a,b){
+            var i,rest = [];
+            if(arguments.length>2){
+                for( i = 2;i < arguments.length; i++){
+                    rest.push(arguments[i]);
+                }
+            }
+            console.log('a = ' +a);
+            console.log('b = ' +b);
+            console.log(rest);
+        }//为了获取已定义的参数a，b之外的参数  我们不得不用arguments 并且循环要从索引2开始以便排除前两个参数
+
+        //es6 标准引入了rest参数 上面的函数可以改写为
+        function foEs6(a,b,...rest){
+            console.log('a =' +a);
+            console.log('b =' +b);
+            console.log(rest);
+        }
+        fo(1,2,3,4,5);
+        foEs6(1,2,3,4,5);
+       /* a = 1
+        b = 2
+        [3, 4, 5]*/
+        fo(1);
+        foEs6(1);
+       /* a = 1
+        b = undefined
+        []*/
+    </script>
+
+</html>

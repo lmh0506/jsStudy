@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <!-- HTML结构 -->
+        <ul id="test-list">
+            <li>JavaScript</li>
+            <li>Swift</li>
+            <li>HTML</li>
+            <li>ANSI C</li>
+            <li>CSS</li>
+            <li>DirectX</li>
+        </ul>
+    </body>
+    <script type="text/javascript">
+        var oUl = document.getElementById('test-list');
+        var liArr = document.getElementsByTagName('li');
+        for(var i = 0 ; i < liArr.length; ){
+            if(liArr[i].innerText != 'JavaScript' && liArr[i].innerText != 'HTML' && liArr[i].innerText != 'CSS'){
+                oUl.removeChild(liArr[i]);
+            }else{
+                i++;
+            }
+        }
+
+        // 测试:
+        (function () {
+            var
+                arr, i,
+                t = document.getElementById('test-list');
+            if (t && t.children && t.children.length === 3) {
+                arr = [];
+                for (i = 0; i < t.children.length; i ++) {
+                    arr.push(t.children[i].innerText);
+                }
+                if (arr.toString() === ['JavaScript', 'HTML', 'CSS'].toString()) {
+                    alert('测试通过!');
+                }
+                else {
+                    alert('测试失败: ' + arr.toString());
+                }
+            }
+            else {
+                alert('测试失败!');
+            }
+        })(); 
+        
+    </script>
+</html>
